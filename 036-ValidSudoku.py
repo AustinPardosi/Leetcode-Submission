@@ -22,8 +22,7 @@ class Solution:
 
         return True
 
-    # better on runtime cause set and better memory too
-from collections import defaultdict
+# better on runtime cause set and better memory too
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
         seen = set()
