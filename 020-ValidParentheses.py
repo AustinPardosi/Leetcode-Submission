@@ -1,16 +1,16 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        checkMap = {"}": "{", ")": "(", "]": "["}
-        result = []
+        storage = []
+        pairs = {
+            '}' : '{',
+            ')' : '(',
+            ']' : '['
+        }
 
-        for char in s:
-            if char not in checkMap:
-                result.append(char)
-                continue
-
-            if not result or checkMap[char] != result[-1]:
-                return False
-
-            result.pop(-1)
-
-        return len(result) == 0
+        for item in s:
+            if item in pairs:
+                if len(storage) == 0 or storage.pop() != pairs[item]:
+                    return False
+            else:
+                storage.append(item)
+        return len(storage) == 0
