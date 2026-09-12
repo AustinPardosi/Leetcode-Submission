@@ -3,33 +3,39 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
 class Solution:
     def reorderList(self, head: Optional[ListNode]) -> None:
-        """
-        Do not return anything, modify head in-place instead.
-        """
-        # Cari titik tengah
-        slow, fast = head, head.next
+        # Find the middle
+        slow, fast = head, head
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
+        
+        # Split the list
+        middle = slow
+        second = middle.next
+        middle.next = None
 
-        # Tangkap dan pecahkan linkedlist jadi 2
-        second = slow.next
-        prev, slow.next = None, None
+        # Reverse the second half
+        prev, curr = None, second
+        while curr:
+            nextNode = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nextNode
+        # prev is the head of second half
 
-        # Reverse linkedlist second
+        # Merge the two half
+        first, second = head, prev
         while second:
-            temp = second.next
-            second.next = prev
-            prev = second
-            second = temp
+            temp1 = first.next
+            temp2 = second.next
 
-        # Merge Linkedlist
-        list1, list2 = head, prev
-        while list2:
-            temp1, temp2 = list1.next, list2.next
-            list1.next = list2
-            list2.next = temp1
-            list1, list2 = temp1, temp2
-        return list1
+            first.next = second
+            second.next = temp1
+
+            first = temp1
+            second = temp2
+        
+        # Remember to not return anything -> the idea is to modify the node not to create a new one
