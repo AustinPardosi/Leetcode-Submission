@@ -1,25 +1,29 @@
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
-        if len(grid) == 0:
-            return 0 
-
-        rows, cols = len(grid), len(grid[0])
-        visited = [[False for _ in range(cols)] for _ in range (rows)]
-        numOfIsland = 0
+        count = 0
+        movement = [(0,1), (0,-1), (1,0), (-1,0)]
+        row, col = len(grid), len(grid[0])
 
         def dfs(r, c):
-            if r < 0 or r >= rows or c >= cols or c < 0 or visited[r][c] or grid[r][c] == '0':
-                return 
-            visited[r][c] = True
-            dfs(r+1, c)
-            dfs(r-1, c)
-            dfs(r, c+1)
-            dfs(r, c-1)
+            # Check invalid
+            if (r<0 or r>=row or
+                c<0 or c>=col or
+                grid[r][c] == "0"):
+                return
 
-        for r in range(len(grid)):
-            for c in range(len(grid[0])):
-                if grid[r][c] == '1' and not visited[r][c]:
-                    numOfIsland += 1
-                    dfs(r, c)
+            # Change island into water
+            grid[r][c] = "0"
+
+            # Change every island adjacent to it into water
+            for dr, dc in movement:
+                dfs(r+dr, c+dc)
         
-        return numOfIsland
+        for i in range(row):
+            for j in range(col):
+                if grid[i][j] == '1':
+                    # found a island
+                    count += 1
+                    # destroy island into water
+                    dfs(i, j)
+
+        return count
