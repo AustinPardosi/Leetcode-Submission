@@ -3,6 +3,7 @@ class Solution:
         res = []
         nums.sort()
         for i, a in enumerate (nums):
+            # Skip duplicate first elements
             if (i>0 and nums[i] == nums[i-1]):
                 continue
             l, r = i+1, len(nums)-1

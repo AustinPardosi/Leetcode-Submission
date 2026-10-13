@@ -12,3 +12,14 @@ class Solution:
         for val in hashMap.values():
             result.append(val)
         return result
+
+# Another
+from collections import defaultdict
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        dic = defaultdict(list)
+        for data in strs:
+            temp = "".join(sorted(data))
+            dic[temp].append(data)
+        result = list(dic.values())
+        return result
