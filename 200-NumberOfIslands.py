@@ -13,7 +13,6 @@ class Solution:
 
             # Change island into water
             grid[r][c] = "0"
-
             # Change every island adjacent to it into water
             for dr, dc in movement:
                 dfs(r+dr, c+dc)

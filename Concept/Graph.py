@@ -78,3 +78,6 @@
 
 #     for dr, dc in directions:
 #         ...
+
+
+# For matrix graph we commonly list all possible movement
