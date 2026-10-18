@@ -1,19 +1,27 @@
+from collections import defaultdict
+
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        hashMap = {}
+        # Count how many times each number appears
+        data = defaultdict(int)
+
         for num in nums:
-            if num not in hashMap:
-                hashMap[num] = 1
-            else:
-                hashMap[num] += 1
+            data[num] += 1
 
-        freq = [[] for i in range(len(nums) + 1)]
-        for n, val in hashMap.items():
-            freq[val].append(n)
+        # arr[i] contains numbers that appear exactly i times
+        # +1 because frequency can be len(nums)
+        arr = [[] for _ in range(len(nums) + 1)]
 
-        res = []
-        for i in range(len(freq) - 1, 0, -1):
-            for n in freq[i]:
-                res.append(n)
-                if len(res) == k:
-                    return res
+        for num, count in data.items():
+            arr[count].append(num)
+
+        # Start from the highest frequency
+        result = []
+
+        for i in range(len(arr) - 1, 0, -1):
+            for num in arr[i]:
+                result.append(num)
+
+                # Stop once we have k numbers
+                if len(result) == k:
+                    return result
