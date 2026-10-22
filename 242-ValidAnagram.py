@@ -20,20 +20,24 @@ class Solution:
         return hashMapS == hashMapT
 
 # another approach (better in memory usage)
+from collections import defaultdict
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         if len(s) != len(t):
             return False
 
-        data = {}
+        count = defaultdict(int)
 
-        for num in s:
-            data[num] = data.get(num, 0) + 1
-        for num in t:
-            if num not in data:
+        # Count every character in s
+        for char in s:
+            count[char] += 1
+
+        # Subtract every character in t
+        for char in t:
+            count[char] -= 1
+
+            # If a character appears more times in t than s
+            if count[char] < 0:
                 return False
-            data[num] -= 1
-            if data[num] == 0:
-                del data[num]
 
         return True
